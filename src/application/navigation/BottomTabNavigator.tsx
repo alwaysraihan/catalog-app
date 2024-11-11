@@ -28,7 +28,7 @@ export const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#007AFF',
+        tabBarActiveTintColor: 'red',
         tabBarInactiveTintColor: '#8E8E93',
         tabBarStyle: {
           height: Platform.OS === 'ios' ? 88 : 60,
