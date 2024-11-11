@@ -11,6 +11,7 @@ module.exports = {
           '@FoodMamaUi': './src/presentation/ui',
           '@FoodMamaApplication': './src/application',
           '@FoodMamaAsset': './src/presentation/assets',
+          '@FoodMamaPresentation': './src/presentation',
         },
       },
     ],

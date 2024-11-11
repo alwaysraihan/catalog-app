@@ -6,7 +6,8 @@
       "*": ["./*"],
       "@FoodMamaUi": ["src/presentation/ui"],
       "@FoodMamaApplication": ["src/application"],
-      "@FoodMamaAsset": ["src/presentation/assets"]
+      "@FoodMamaAsset": ["src/presentation/assets"],
+      "@FoodMamaPresentation": ["src/presentation"]
     }
   }
 }
