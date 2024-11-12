@@ -1,11 +1,32 @@
 import {StyleSheet, View} from 'react-native';
-import {useGetProductsQuery} from '@FoodMamaApplication';
+import {useGetProductsQuery, localStorage} from '@FoodMamaApplication';
 import {ProductCard, ProductCardSkeleton, ProductListHeader} from '@FoodMamaUi';
 import {FlashList} from '@shopify/flash-list';
 import React from 'react';
 
 export const ProductsSection = () => {
   const {data: products = [], isLoading, isError} = useGetProductsQuery(10);
+  const previousProducts = localStorage.getString('products');
+
+  if (isError && previousProducts) {
+    const parsedProducts = previousProducts
+      ? (JSON.parse(previousProducts) as Product[])
+      : [];
+    return (
+      <FlashList
+        ListHeaderComponent={ProductListHeader}
+        data={parsedProducts}
+        keyExtractor={item => item.id.toString()}
+        numColumns={2}
+        renderItem={({item}) => (
+          <View style={styles.itemContainer}>
+            <ProductCard product={item} />
+          </View>
+        )}
+        estimatedItemSize={330}
+      />
+    );
+  }
   if (isLoading || isError) {
     return (
       <FlashList
@@ -18,7 +39,7 @@ export const ProductsSection = () => {
             <ProductCardSkeleton />
           </View>
         )}
-        estimatedItemSize={150}
+        estimatedItemSize={330}
       />
     );
   }

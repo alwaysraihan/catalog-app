@@ -7,6 +7,11 @@ const productFetchApi = createApi({
   endpoints: builder => ({
     getProducts: builder.query<Product[], number>({
       query: (limit = 10) => `products?limit=${limit}`,
+      transformResponse: (response: Product[]) => {
+        localStorage.set('products', JSON.stringify(response));
+        return response;
+      },
+
     }),
   }),
 });
