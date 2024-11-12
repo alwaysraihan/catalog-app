@@ -3,10 +3,12 @@ import {TypedUseSelectorHook, useDispatch, useSelector} from 'react-redux';
 import {productFetchApi, productDetailsFetchApi} from '@FoodMamaApplication';
 import {setupListeners} from '@reduxjs/toolkit/query';
 import locationReducer from './slices/locationSlice';
+import cartReducer from './slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
     location: locationReducer,
+    cart:cartReducer,
     [productFetchApi.reducerPath]: productFetchApi.reducer,
     [productDetailsFetchApi.reducerPath]: productDetailsFetchApi.reducer,
   },

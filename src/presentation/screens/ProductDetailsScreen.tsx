@@ -1,8 +1,23 @@
-import React from 'react';
-import {Text, Image, StyleSheet, ActivityIndicator, View} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Text,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useRoute, RouteProp} from '@react-navigation/native';
-import {colors, useGetProductDetailsQuery} from '@FoodMamaApplication';
+import {useRoute, RouteProp, useNavigation} from '@react-navigation/native';
+
+import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  addProduct,
+  useAppDispatch,
+  useGetProductDetailsQuery,
+} from '@FoodMamaApplication';
 
 type ProductDetailsRouteProp = RouteProp<
   HomeStackParamList,
@@ -12,19 +27,34 @@ type ProductDetailsRouteProp = RouteProp<
 export const ProductDetailsScreen: React.FC = () => {
   const route = useRoute<ProductDetailsRouteProp>();
   const {productId} = route.params;
+  const [quantity, setQuantity] = useState(1);
+  const dispatch = useAppDispatch();
+  const navigation = useNavigation();
+
+  const handleIncrease = () => setQuantity(prev => prev + 1);
+  const handleDecrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+
   const {
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
 
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(addProduct({...product, quantity}));
+      Alert.alert('Success', 'Product added to cart successfully');
+    }
+  };
+
   if (isLoading) {
     return (
       <View style={styles.centerContainer}>
-        <ActivityIndicator size="large" color={colors.primary} />
+        <ActivityIndicator size="large" color="#FF6347" />
       </View>
     );
   }
+
   if (error) {
     return (
       <View style={styles.centerContainer}>
@@ -35,26 +65,56 @@ export const ProductDetailsScreen: React.FC = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      {product && (
-        <>
-          <Image source={{uri: product.image}} style={styles.productImage} />
-          <Text style={styles.title}>{product.title}</Text>
-          <Text style={styles.price}>${product.price}</Text>
-          <Text style={styles.description}>{product.description}</Text>
-          <Text style={styles.category}>Category: {product.category}</Text>
-          <Text style={styles.rating}>
-            Rating: {product.rating.rate} ({product.rating.count} reviews)
-          </Text>
-        </>
-      )}
+      <ScrollView
+        style={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}>
+        {product && (
+          <>
+            <Image source={{uri: product.image}} style={styles.productImage} />
+            <TouchableOpacity
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}>
+              <Icon name="arrow-back" size={20} color="#fff" />
+            </TouchableOpacity>
+
+            <Text style={styles.title}>{product.title}</Text>
+            <Text style={styles.price}>${product.price}</Text>
+            <Text style={styles.description}>{product.description}</Text>
+
+            <View style={styles.cartActionsContainer}>
+              <View style={styles.quantityContainer}>
+                <TouchableOpacity
+                  onPress={handleDecrease}
+                  style={styles.iconButton}>
+                  <Icon name="remove-circle-outline" size={30} color="#555" />
+                </TouchableOpacity>
+                <Text style={styles.quantityText}>{quantity}</Text>
+                <TouchableOpacity
+                  onPress={handleIncrease}
+                  style={styles.iconButton}>
+                  <Icon name="add-circle-outline" size={30} color="#555" />
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity
+                onPress={handleAddToCart}
+                style={styles.addToCartButton}>
+                <Text style={styles.addToCartText}>Add to Cart</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    paddingHorizontal: 16,
     backgroundColor: '#fff',
+    flex: 1,
+  },
+  scrollContainer: {
     flex: 1,
   },
   centerContainer: {
@@ -65,8 +125,16 @@ const styles = StyleSheet.create({
   productImage: {
     width: '100%',
     height: 300,
+    marginVertical:10,
     resizeMode: 'contain',
-    marginBottom: 16,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 15,
+    left: 15,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 20,
+    padding: 6,
   },
   title: {
     fontSize: 24,
@@ -83,13 +151,35 @@ const styles = StyleSheet.create({
     color: '#555',
     marginBottom: 16,
   },
-  category: {
-    fontSize: 16,
-    color: '#333',
-    marginBottom: 8,
+  cartActionsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    marginTop: 10,
+    backgroundColor: '#f9f9f9',
   },
-  rating: {
+  quantityContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  iconButton: {
+    padding: 8,
+  },
+  quantityText: {
+    fontSize: 18,
+    marginHorizontal: 8,
+  },
+  addToCartButton: {
+    backgroundColor: '#FF6347',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  addToCartText: {
+    color: '#fff',
     fontSize: 16,
-    color: '#333',
+    fontWeight: 'bold',
   },
 });
