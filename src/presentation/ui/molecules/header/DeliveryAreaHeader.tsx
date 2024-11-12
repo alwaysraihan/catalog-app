@@ -3,8 +3,10 @@ import React from 'react';
 import {FTypography} from '../../atoms';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {colors, useCurrentLocation} from '@FoodMamaApplication';
+import {useNavigation} from '@react-navigation/native';
 
 export const DeliveryAreaHeader = () => {
+  const navigation = useNavigation();
   const {location} = useCurrentLocation();
   return (
     <View style={styles.container}>
@@ -21,7 +23,8 @@ export const DeliveryAreaHeader = () => {
         </FTypography>
       </View>
       {/* right side  */}
-      <TouchableOpacity style={styles.rightContainer}>
+      {/* @ts-ignore  */}
+      <TouchableOpacity style={styles.rightContainer} onPress={() => {navigation.navigate('Location')}}>
         <FTypography variant="regular" style={styles.changeArea}>
           Change Area
         </FTypography>
