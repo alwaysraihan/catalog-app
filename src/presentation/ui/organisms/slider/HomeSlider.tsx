@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import Animated, {useSharedValue} from 'react-native-reanimated';
+import Animated, {useSharedValue, withTiming} from 'react-native-reanimated';
 
 import {homeSliderMockData} from '@FoodMamaApplication';
 import {CarouselCard, SliderPagination} from '../../molecules';
@@ -10,12 +10,29 @@ const ITEM_WIDTH = Dimensions.get('window').width - OFFSET * 2;
 
 export const HomeSlider = () => {
   const scrollX = useSharedValue(0);
+  const scrollViewRef = useRef<Animated.ScrollView>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const nextIndex = Math.floor(scrollX.value / ITEM_WIDTH) + 1;
+      const nextOffset = (nextIndex % homeSliderMockData.length) * ITEM_WIDTH;
+
+      scrollViewRef?.current?.scrollTo({
+        x: nextOffset,
+        animated: true,
+      });
+      scrollX.value = withTiming(nextOffset);
+    }, 3000);
+
+    return () => clearInterval(interval); // Clean up on unmount
+  }, [scrollX]);
 
   return (
     <View style={styles.parallaxCarouselView}>
       <Animated.ScrollView
-        horizontal={true}
-        decelerationRate={'fast'}
+        ref={scrollViewRef}
+        horizontal
+        decelerationRate="fast"
         snapToInterval={ITEM_WIDTH}
         showsHorizontalScrollIndicator={false}
         bounces={false}

@@ -6,7 +6,7 @@ import BootSplash from 'react-native-bootsplash';
 const App = () => {
   useEffect(() => {
     const init = async () => {
-      // …do multiple sync or async tasks
+      await new Promise(resolve => setTimeout(resolve, 5000)); // wait for 5 seconds
     };
 
     init().finally(async () => {
