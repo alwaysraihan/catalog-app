@@ -51,7 +51,12 @@ yarn install
           android:name="com.google.android.geo.API_KEY"
           android:value="Your Google maps API Key Here"/>
        ```
-
+ - **For Home Screen Area Name**:
+     - Open `src\application\@global\constants` and replace the placeholder `GOOGLE_MAPS_API_KEY` on line 2 with your actual API Key.
+     ```ts
+     // line 2
+    export const GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY';
+     ```
 ## Running the App
 
 ### Step 3: Run the App on Your Emulator or Device
