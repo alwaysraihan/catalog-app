@@ -26,14 +26,15 @@ export const CurrentTimeView = () => {
       CurrentTimeModule.stopTimeUpdate();
     };
   }, []);
+  if (!currentTime) {
+    return null;
+  }
   return (
     <View style={styles.timeContainer}>
       <Text style={styles.timeText}>{currentTime}</Text>
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   timeContainer: {

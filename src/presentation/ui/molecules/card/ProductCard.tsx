@@ -1,9 +1,19 @@
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React from 'react';
-import {StyleSheet, Image, Text, View} from 'react-native';
+import {StyleSheet, Image, Text, View, TouchableOpacity} from 'react-native';
+type HomeScreenNavigationProp = NativeStackNavigationProp<HomeStackParamList>;
 
 export const ProductCard = ({product}: {product: Product}) => {
+  const navigation = useNavigation<HomeScreenNavigationProp>();
+
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => {
+        navigation.navigate('ProductDetailsScreen', {productId: product.id});
+      }}
+      style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           source={{uri: product.image}}
@@ -20,7 +30,7 @@ export const ProductCard = ({product}: {product: Product}) => {
           {product.rating.rate} ({product.rating.count})
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

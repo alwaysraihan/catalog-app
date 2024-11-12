@@ -10,5 +10,5 @@ type BottomTabParamList = {
 };
 type HomeStackParamList = {
   HomeScreen: undefined;
-  ProductDetailsScreen: undefined;
+  ProductDetailsScreen: {productId: number};
 };

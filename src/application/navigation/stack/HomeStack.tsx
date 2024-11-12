@@ -1,4 +1,4 @@
-import {HomeScreen} from '@FoodMamaPresentation';
+import {HomeScreen, ProductDetailsScreen} from '@FoodMamaPresentation';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React, {FunctionComponent} from 'react';
 
@@ -10,7 +10,7 @@ export const HomeStack: FunctionComponent = () => {
         headerShown: false,
       }}>
       <Stack.Screen name="HomeScreen" component={HomeScreen} />
-      <Stack.Screen name="ProductDetailsScreen" component={HomeScreen} />
+      <Stack.Screen name="ProductDetailsScreen" component={ProductDetailsScreen} />
     </Stack.Navigator>
   );
 };
