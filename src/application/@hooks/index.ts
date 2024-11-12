@@ -1,1 +1,1 @@
-export * from './useCurrentLoation';
+export {useCurrentLocation} from './useCurrentLoation';
