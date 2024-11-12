@@ -4,16 +4,18 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 export const ProductCardSkeleton = () => {
   return (
-    <SkeletonPlaceholder>
-      <View style={styles.container}>
-        <View style={styles.imageSkeleton} />
-        <View style={styles.contentContainer}>
-          <View style={styles.titleSkeleton} />
-          <View style={styles.priceSkeleton} />
-          <View style={styles.ratingSkeleton} />
+    <View style={styles.container}>
+      <SkeletonPlaceholder>
+        <View>
+          <View style={styles.imageSkeleton} />
+          <View style={styles.contentContainer}>
+            <View style={styles.titleSkeleton} />
+            <View style={styles.priceSkeleton} />
+            <View style={styles.ratingSkeleton} />
+          </View>
         </View>
-      </View>
-    </SkeletonPlaceholder>
+      </SkeletonPlaceholder>
+    </View>
   );
 };
 
@@ -24,7 +26,7 @@ const styles = StyleSheet.create({
     marginTop: 8,
     padding: 12,
     shadowColor: 'rgba(0, 0, 0, 0.8)',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.23,
     shadowRadius: 2.62,
     elevation: 4,
