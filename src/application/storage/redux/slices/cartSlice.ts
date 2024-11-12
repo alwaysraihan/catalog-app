@@ -46,6 +46,7 @@ const cartSlice = createSlice({
       const product = state.items.find(item => item.id === action.payload.id);
       if (product) {
         product.quantity = action.payload.quantity;
+        product.price = action.payload.quantity * product.price;
       }
       saveCartToStorage(state);
     },
