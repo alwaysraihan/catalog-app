@@ -1,29 +1,15 @@
 import {StyleSheet, View} from 'react-native';
 import {useGetProductsQuery} from '@FoodMamaApplication';
-import {
-  HomeSlider,
-  ProductCard,
-  ProductCardSkeleton,
-  ProductListHeader,
-} from '@FoodMamaUi';
+import {ProductCard, ProductCardSkeleton, ProductListHeader} from '@FoodMamaUi';
 import {FlashList} from '@shopify/flash-list';
 import React from 'react';
 
-function renderHeader() {
-  return (
-    <>
-      <HomeSlider />
-      <ProductListHeader />
-    </>
-  );
-}
-
 export const ProductsSection = () => {
-  const {data: products = [], isLoading} = useGetProductsQuery(10);
-  if (isLoading) {
+  const {data: products = [], isLoading, isError} = useGetProductsQuery(10);
+  if (isLoading || isError) {
     return (
       <FlashList
-      ListHeaderComponent={renderHeader}
+        ListHeaderComponent={ProductListHeader}
         data={[1, 2, 3, 4]}
         keyExtractor={item => item.toString()}
         numColumns={2}
@@ -38,7 +24,7 @@ export const ProductsSection = () => {
   }
   return (
     <FlashList
-      ListHeaderComponent={renderHeader}
+      ListHeaderComponent={ProductListHeader}
       data={products}
       keyExtractor={item => item.id.toString()}
       numColumns={2}
