@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Text,
   Image,
@@ -17,6 +17,7 @@ import {
   addProduct,
   useAppDispatch,
   useGetProductDetailsQuery,
+  localStorage,
 } from '@FoodMamaApplication';
 
 type ProductDetailsRouteProp = RouteProp<
@@ -33,12 +34,31 @@ export const ProductDetailsScreen: React.FC = () => {
 
   const handleIncrease = () => setQuantity(prev => prev + 1);
   const handleDecrease = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  const [cachedProduct, setCachedProduct] = useState<Product | null>(null);
 
   const {
     data: product,
     isLoading,
     error,
   } = useGetProductDetailsQuery(productId);
+  // Check for cached product data if error occurs
+  useEffect(() => {
+    if (error && !product) {
+      const storedProduct = localStorage.getString('products');
+      if (storedProduct) {
+        const isExisting = JSON.parse(storedProduct).find(
+          (item: Product) => item.id === productId,
+        );
+        if (isExisting) {
+          setCachedProduct(isExisting);
+        }
+      }
+    } else if (product) {
+      // Cache product data on successful fetch
+      localStorage.set(`product_${productId}`, JSON.stringify(product));
+    }
+  }, [error, product, productId]);
+  const displayProduct = product || cachedProduct;
 
   const handleAddToCart = () => {
     if (product) {
@@ -56,7 +76,7 @@ export const ProductDetailsScreen: React.FC = () => {
     );
   }
 
-  if (error) {
+  if (error && !displayProduct) {
     return (
       <View style={styles.centerContainer}>
         <Text>Error loading product details</Text>
@@ -69,18 +89,18 @@ export const ProductDetailsScreen: React.FC = () => {
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}>
-        {product && (
+        {displayProduct  && (
           <>
-            <Image source={{uri: product.image}} style={styles.productImage} />
+            <Image source={{uri: displayProduct.image}} style={styles.productImage} />
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => navigation.goBack()}>
               <Icon name="arrow-back" size={20} color="#fff" />
             </TouchableOpacity>
 
-            <Text style={styles.title}>{product.title}</Text>
-            <Text style={styles.price}>${product.price}</Text>
-            <Text style={styles.description}>{product.description}</Text>
+            <Text style={styles.title}>{displayProduct.title}</Text>
+            <Text style={styles.price}>${displayProduct.price}</Text>
+            <Text style={styles.description}>{displayProduct.description}</Text>
 
             <View style={styles.cartActionsContainer}>
               <View style={styles.quantityContainer}>
@@ -126,7 +146,7 @@ const styles = StyleSheet.create({
   productImage: {
     width: '100%',
     height: 300,
-    marginVertical:10,
+    marginVertical: 10,
     resizeMode: 'contain',
   },
   backButton: {
