@@ -1,6 +1,6 @@
 #import <GoogleMaps/GoogleMaps.h>
 #import "AppDelegate.h"
-
+#import "RNBootSplash.h" // React Native Boot Splash Screen
 #import <React/RCTBundleURLProvider.h>
 
 @implementation AppDelegate
@@ -29,5 +29,13 @@
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
 }
-
+// react native boot splash screen
+- (UIView *)createRootViewWithBridge:(RCTBridge *)bridge
+                          moduleName:(NSString *)moduleName
+                           initProps:(NSDictionary *)initProps {
+  UIView *rootView = [super createRootViewWithBridge:bridge moduleName:moduleName initProps:initProps];
+  [RNBootSplash initWithStoryboard:@"LaunchScreen" rootView:rootView]; // ⬅️ initialize the splash screen
+  return rootView;
+}
+// react native boot splash screen
 @end
