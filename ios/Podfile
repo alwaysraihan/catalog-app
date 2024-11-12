@@ -16,7 +16,10 @@ end
 
 target 'catalog' do
   config = use_native_modules!
-
+# React Native Maps dependencies started
+rn_maps_path = '../node_modules/react-native-maps'
+pod 'react-native-google-maps', :path => rn_maps_path
+# React Native Maps dependencies end
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.

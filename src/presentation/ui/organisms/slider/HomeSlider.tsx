@@ -2,9 +2,8 @@ import React from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import Animated, {useSharedValue} from 'react-native-reanimated';
 
-
-import { homeSliderMockData } from '@FoodMamaApplication';
-import { CarouselCard, SliderPagination } from '../../molecules';
+import {homeSliderMockData} from '@FoodMamaApplication';
+import {CarouselCard, SliderPagination} from '../../molecules';
 
 const OFFSET = 45;
 const ITEM_WIDTH = Dimensions.get('window').width - OFFSET * 2;

@@ -2,20 +2,27 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {FTypography} from '../../atoms';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useCurrentLocation} from '@FoodMamaApplication';
 
 export const DeliveryAreaHeader = () => {
+  const {location} = useCurrentLocation();
   return (
     <View style={styles.container}>
       {/* left side  */}
-      <View>
-        <FTypography variant="h4" style={styles.title}>Deliver To</FTypography>
-        <FTypography variant="regular" style={styles.subTitle}>
-          Aftab Nagor Dhaka
+      <View style={styles.leftContainer}>
+        <FTypography variant="h4" style={styles.title}>
+          Deliver To
+        </FTypography>
+        <FTypography
+          variant="regular"
+          style={styles.subTitle}
+          numberOfLines={1}>
+          {location?.area || 'Dhaka, Bangladesh'}
         </FTypography>
       </View>
       {/* right side  */}
-      <TouchableOpacity style={styles.rightCotanier}>
-        <FTypography variant="regular" style={styles.subTitle}>
+      <TouchableOpacity style={styles.rightContainer}>
+        <FTypography variant="regular" style={styles.changeArea}>
           Change Area
         </FTypography>
         <MaterialIcons name="map-marker" color={'white'} size={18} />
@@ -23,8 +30,6 @@ export const DeliveryAreaHeader = () => {
     </View>
   );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -34,7 +39,24 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     backgroundColor: 'red',
   },
-  title: {fontWeight: '500', color: 'white'},
-  subTitle: {color: 'white'},
-  rightCotanier: {flexDirection: 'row', alignItems: 'center'},
+  leftContainer: {
+    flex: 1,
+    marginRight: 16,
+  },
+  title: {
+    fontWeight: '500',
+    color: 'white',
+  },
+  subTitle: {
+    color: 'white',
+  },
+  changeArea: {
+    color: 'white',
+    marginRight: 4,
+  },
+  rightContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexShrink: 0,
+  },
 });

@@ -1,1 +1,2 @@
-export * from './mockData'
+export * from './local';
+export * from './redux';
