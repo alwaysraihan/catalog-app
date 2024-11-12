@@ -10,7 +10,9 @@ class CurrentTimePackage : ReactPackage {
         return listOf(CurrentTimeModule(reactContext))
     }
 
-    override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
+    override fun createViewManagers(
+            reactContext: ReactApplicationContext
+    ): List<ViewManager<*, *>> {
         return emptyList()
     }
 }
