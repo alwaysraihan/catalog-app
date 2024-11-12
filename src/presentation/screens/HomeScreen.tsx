@@ -1,21 +1,20 @@
 import React from 'react';
-import {
-
-  StatusBar,
-  StyleSheet,
-
-} from 'react-native';
+import {StatusBar, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {CurrentTimeView, DeliveryAreaHeader, HomeSlider, ProductsSection} from '@FoodMamaUi';
+import {
+  CurrentTimeView,
+  DeliveryAreaHeader,
+  ProductsSection,
+} from '@FoodMamaUi';
 
 export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'red'} />
       <DeliveryAreaHeader />
-      <HomeSlider />
+
       <ProductsSection />
-      <CurrentTimeView/>
+      <CurrentTimeView />
     </SafeAreaView>
   );
 };
