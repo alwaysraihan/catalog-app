@@ -1,1 +1,2 @@
-export * from './CarouselCard'
+export * from './CarouselCard';
+export * from './ProductCard';

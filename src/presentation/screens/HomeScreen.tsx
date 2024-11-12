@@ -6,7 +6,7 @@ import {
 
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {CurrentTimeView, DeliveryAreaHeader, HomeSlider} from '@FoodMamaUi';
+import {CurrentTimeView, DeliveryAreaHeader, HomeSlider, ProductsSection} from '@FoodMamaUi';
 
 export const HomeScreen = () => {
   return (
@@ -14,6 +14,7 @@ export const HomeScreen = () => {
       <StatusBar backgroundColor={'red'} />
       <DeliveryAreaHeader />
       <HomeSlider />
+      <ProductsSection />
       <CurrentTimeView/>
     </SafeAreaView>
   );
