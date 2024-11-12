@@ -1,44 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
-  NativeEventEmitter,
-  NativeModules,
+
   StatusBar,
   StyleSheet,
-  Text,
-  View,
+
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {DeliveryAreaHeader, HomeSlider} from '@FoodMamaUi';
-import {formatDate} from '@FoodMamaApplication';
-
-const {CurrentTimeModule} = NativeModules;
+import {CurrentTimeView, DeliveryAreaHeader, HomeSlider} from '@FoodMamaUi';
 
 export const HomeScreen = () => {
-  const [currentTime, setCurrentTime] = useState('');
-
-  useEffect(() => {
-    const eventEmitter = new NativeEventEmitter(CurrentTimeModule);
-    const subscription = eventEmitter.addListener('onTimeUpdate', event => {
-      console.log('Received timestamp:', event.timestamp);
-      const localTime = formatDate(event.timestamp);
-      setCurrentTime(localTime);
-    });
-
-    CurrentTimeModule.startTimeUpdate();
-    return () => {
-      subscription.remove();
-      CurrentTimeModule.stopTimeUpdate();
-    };
-  }, []);
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={'red'} />
       <DeliveryAreaHeader />
       <HomeSlider />
-      <View style={styles.timeContainer}>
-        <Text style={styles.timeText}>{currentTime}</Text>
-      </View>
+      <CurrentTimeView/>
     </SafeAreaView>
   );
 };
