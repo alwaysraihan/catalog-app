@@ -4,11 +4,13 @@ import {productFetchApi, productDetailsFetchApi} from '@FoodMamaApplication';
 import {setupListeners} from '@reduxjs/toolkit/query';
 import locationReducer from './slices/locationSlice';
 import cartReducer from './slices/cartSlice';
+import historyReducer from './slices/historySlice';
 
 export const store = configureStore({
   reducer: {
     location: locationReducer,
     cart:cartReducer,
+    history:historyReducer,
     [productFetchApi.reducerPath]: productFetchApi.reducer,
     [productDetailsFetchApi.reducerPath]: productDetailsFetchApi.reducer,
   },

@@ -18,6 +18,7 @@ import {
   useAppDispatch,
   useGetProductDetailsQuery,
   localStorage,
+  addToHistory,
 } from '@FoodMamaApplication';
 
 type ProductDetailsRouteProp = RouteProp<
@@ -59,7 +60,11 @@ export const ProductDetailsScreen: React.FC = () => {
     }
   }, [error, product, productId]);
   const displayProduct = product || cachedProduct;
-
+  useEffect(() => {
+    if (displayProduct) {
+      dispatch(addToHistory(displayProduct));
+    }
+  }, [dispatch, displayProduct]);
   const handleAddToCart = () => {
     if (product) {
       dispatch(addProduct({...product, quantity}));
@@ -89,9 +94,12 @@ export const ProductDetailsScreen: React.FC = () => {
       <ScrollView
         style={styles.scrollContainer}
         showsVerticalScrollIndicator={false}>
-        {displayProduct  && (
+        {displayProduct && (
           <>
-            <Image source={{uri: displayProduct.image}} style={styles.productImage} />
+            <Image
+              source={{uri: displayProduct.image}}
+              style={styles.productImage}
+            />
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => navigation.goBack()}>
