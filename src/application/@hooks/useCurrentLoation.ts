@@ -1,13 +1,13 @@
 import {useEffect, useCallback, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 import {useDispatch, useSelector} from 'react-redux';
-import {setLocation} from '@FoodMamaApplication';
+import {GOOGLE_MAPS_API_KEY, setLocation} from '@FoodMamaApplication';
 import {AppDispatch, RootState} from '@FoodMamaApplication';
 import {PermissionsAndroid, Platform, Alert} from 'react-native';
 import Geocoder from 'react-native-geocoding';
 
 // Initialize Geocoder with your API key
-Geocoder.init('AIzaSyDaERPmsWGDCk2MrKXsqkMfPkSu614Simk');
+Geocoder.init(GOOGLE_MAPS_API_KEY);
 
 export const useCurrentLocation = () => {
   const dispatch = useDispatch<AppDispatch>();
