@@ -2,7 +2,7 @@ import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {FTypography} from '../../atoms';
 import MaterialIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useCurrentLocation} from '@FoodMamaApplication';
+import {colors, useCurrentLocation} from '@FoodMamaApplication';
 
 export const DeliveryAreaHeader = () => {
   const {location} = useCurrentLocation();
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
-    backgroundColor: 'red',
+    backgroundColor: colors.primary,
   },
   leftContainer: {
     flex: 1,

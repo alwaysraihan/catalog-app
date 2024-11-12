@@ -42,14 +42,14 @@ export const CartScreen = () => {
           </Text>
         </View>
         <View>
-          <Text style={styles.productPrice}>${item.price}</Text>
+          <Text style={styles.productPrice}>${item.price.toFixed(2)}</Text>
           <View style={styles.quantityContainer}>
             <TouchableOpacity
               disabled={item.quantity === 1}
               onPress={handleDecrease}>
               <Icon name="remove-circle-outline" size={30} color="#555" />
             </TouchableOpacity>
-            <Text style={styles.quantity}>{item.quantity.toFixed(2)}</Text>
+            <Text style={styles.quantity}>{item.quantity}</Text>
             <TouchableOpacity onPress={handleIncrease}>
               <Icon name="add-circle-outline" size={30} color="#555" />
             </TouchableOpacity>

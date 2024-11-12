@@ -7,11 +7,12 @@ import {
   HomeSlider,
   ProductsSection,
 } from '@FoodMamaUi';
+import { colors } from '@FoodMamaApplication';
 
 export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar backgroundColor={'red'} />
+      <StatusBar backgroundColor={colors.primary} />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <DeliveryAreaHeader />
         <HomeSlider />

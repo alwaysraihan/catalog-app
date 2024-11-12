@@ -6,6 +6,7 @@ import {HomeStack} from './stack/HomeStack';
 import {CartScreen, HistoryScreen, LocationScreen} from '@FoodMamaPresentation';
 import {useSelector} from 'react-redux';
 import {RootState} from '../storage';
+import { colors } from '../@global';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const TabIcons = {
@@ -32,7 +33,7 @@ export const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: 'red',
+        tabBarActiveTintColor:colors.primary,
         tabBarInactiveTintColor: '#8E8E93',
         tabBarStyle: {
           height: Platform.OS === 'ios' ? 88 : 60,
