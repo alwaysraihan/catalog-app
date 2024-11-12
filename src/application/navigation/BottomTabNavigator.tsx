@@ -4,6 +4,8 @@ import {Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {HomeStack} from './stack/HomeStack';
 import {CartScreen, HistoryScreen, LocationScreen} from '@FoodMamaPresentation';
+import {useSelector} from 'react-redux';
+import {RootState} from '../storage';
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 const TabIcons = {
@@ -25,6 +27,8 @@ const TabIcons = {
 };
 
 export const BottomTabNavigator = () => {
+  const cart = useSelector((state: RootState) => state.cart);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -59,7 +63,7 @@ export const BottomTabNavigator = () => {
         component={CartScreen}
         options={{
           tabBarIcon: TabIcons.CartIcon,
-          tabBarBadge: 3,
+          tabBarBadge: cart.items.length,
         }}
       />
 

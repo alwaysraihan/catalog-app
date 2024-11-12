@@ -44,6 +44,7 @@ export const ProductDetailsScreen: React.FC = () => {
     if (product) {
       dispatch(addProduct({...product, quantity}));
       Alert.alert('Success', 'Product added to cart successfully');
+      setQuantity(1);
     }
   };
 
