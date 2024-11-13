@@ -5,6 +5,7 @@ import {GOOGLE_MAPS_API_KEY, setLocation} from '@FoodMamaApplication';
 import {AppDispatch, RootState} from '@FoodMamaApplication';
 import {PermissionsAndroid, Platform, Alert} from 'react-native';
 import Geocoder from 'react-native-geocoding';
+import {promptForEnableLocationIfNeeded} from 'react-native-android-location-enabler';
 
 // Initialize Geocoder with your API key
 Geocoder.init(GOOGLE_MAPS_API_KEY);
@@ -28,6 +29,7 @@ export const useCurrentLocation = () => {
             buttonPositive: 'OK',
           },
         );
+  
         return granted === PermissionsAndroid.RESULTS.GRANTED;
       } catch (err) {
         console.warn('Permission error:', err);
@@ -36,15 +38,25 @@ export const useCurrentLocation = () => {
     }
     return true;
   }, []);
+  const _enableGPS = async () => {
+    try {
+      await promptForEnableLocationIfNeeded({
+        interval: 10000,
+      });
 
+      // do some action after the gps has been activated by the user
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getCurrentLocation = useCallback(async () => {
     const permissionGranted = await requestLocationPermission();
     if (!permissionGranted) {
       Alert.alert('Permission denied', 'Location access is required.');
       return;
     }
-
     setLoading(true);
+    await _enableGPS();
     Geolocation.getCurrentPosition(
       async position => {
         try {
@@ -82,7 +94,7 @@ export const useCurrentLocation = () => {
         setLoading(false);
         console.error('Location error:', err.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      {enableHighAccuracy: false, timeout: 30000, maximumAge: 5000},
     );
   }, [dispatch, requestLocationPermission]);
 
