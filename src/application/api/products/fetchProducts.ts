@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {BASE_URL} from '@FoodMamaApplication';
+import {BASE_URL,localStorage} from '@FoodMamaApplication';
 
 const productFetchApi = createApi({
   reducerPath: 'productFetchApi',
