@@ -1,5 +1,5 @@
 # Getting Started
-
+[![Job Task Demo App (Food Mama)](https://i.ytimg.com/vi/Z2iqGUhWmf8/hqdefault.jpg?sqp=-oaymwE2CNACELwBSFXyq4qpAygIARUAAIhCGAFwAcABBvABAfgB1gGAAuADigIMCAAQARhiIGIoYjAP&rs=AOn4CLD9i_2yZxqLDsHLqfnOu1zBzj13hg)](https://www.youtube.com/watch?v=wyxI688puN8V41ry)
 > **Note**: Ensure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) for both Android and iOS.
 
 This guide will walk you through setting up and running this application on both Android and iOS.
