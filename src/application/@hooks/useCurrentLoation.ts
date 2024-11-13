@@ -44,9 +44,8 @@ export const useCurrentLocation = () => {
         interval: 10000,
       });
 
-      // do some action after the gps has been activated by the user
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
   const getCurrentLocation = useCallback(async () => {
@@ -94,7 +93,7 @@ export const useCurrentLocation = () => {
         setLoading(false);
         console.error('Location error:', err.message);
       },
-      {enableHighAccuracy: false, timeout: 30000, maximumAge: 5000},
+      {enableHighAccuracy:Platform.OS==='ios' ? true : false, timeout: 30000, maximumAge: 5000},
     );
   }, [dispatch, requestLocationPermission]);
 
