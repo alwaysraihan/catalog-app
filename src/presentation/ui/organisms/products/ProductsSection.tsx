@@ -2,10 +2,19 @@ import {StyleSheet, View} from 'react-native';
 import {useGetProductsQuery, localStorage} from '@FoodMamaApplication';
 import {ProductCard, ProductCardSkeleton, ProductListHeader} from '@FoodMamaUi';
 import {FlashList} from '@shopify/flash-list';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 export const ProductsSection = () => {
-  const {data: products = [], isLoading, isError} = useGetProductsQuery(10);
+  const [asc, setAsc] = useState(true);
+  const {
+    data: products = [],
+    isLoading,
+    isError,
+    refetch,
+  } = useGetProductsQuery({limit: 10, sort: asc ? 'asc' : 'desc'});
+  useEffect(() => {
+    refetch();
+  }, [asc, refetch]);
   const previousProducts = localStorage.getString('products');
 
   if (isError && previousProducts) {
@@ -14,7 +23,7 @@ export const ProductsSection = () => {
       : [];
     return (
       <FlashList
-        ListHeaderComponent={ProductListHeader}
+        ListHeaderComponent={<ProductListHeader asc={asc} setAsc={setAsc} />}
         data={parsedProducts}
         keyExtractor={item => item.id.toString()}
         numColumns={2}
@@ -30,7 +39,7 @@ export const ProductsSection = () => {
   if (isLoading || isError) {
     return (
       <FlashList
-        ListHeaderComponent={ProductListHeader}
+        ListHeaderComponent={<ProductListHeader asc={asc} setAsc={setAsc} />}
         data={[1, 2, 3, 4]}
         keyExtractor={item => item.toString()}
         numColumns={2}
@@ -45,7 +54,7 @@ export const ProductsSection = () => {
   }
   return (
     <FlashList
-      ListHeaderComponent={ProductListHeader}
+      ListHeaderComponent={<ProductListHeader asc={asc} setAsc={setAsc} />}
       data={products}
       keyExtractor={item => item.id.toString()}
       numColumns={2}
