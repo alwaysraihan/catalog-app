@@ -13,11 +13,12 @@ export const HomeScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor={colors.primary} />
+      <CurrentTimeView />
+
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <DeliveryAreaHeader />
         <HomeSlider />
         <ProductsSection />
-        <CurrentTimeView />
       </ScrollView>
     </SafeAreaView>
   );

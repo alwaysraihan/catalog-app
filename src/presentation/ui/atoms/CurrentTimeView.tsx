@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     padding: 10,
     borderRadius: 8,
+    zIndex: 999,
   },
   timeText: {
     color: 'white',
