@@ -29,7 +29,7 @@ export const useCurrentLocation = () => {
             buttonPositive: 'OK',
           },
         );
-  
+
         return granted === PermissionsAndroid.RESULTS.GRANTED;
       } catch (err) {
         console.warn('Permission error:', err);
@@ -43,7 +43,6 @@ export const useCurrentLocation = () => {
       await promptForEnableLocationIfNeeded({
         interval: 10000,
       });
-
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +54,9 @@ export const useCurrentLocation = () => {
       return;
     }
     setLoading(true);
-    await _enableGPS();
+    if (Platform.OS === 'android') {
+      await _enableGPS();
+    }
     Geolocation.getCurrentPosition(
       async position => {
         try {
@@ -93,7 +94,11 @@ export const useCurrentLocation = () => {
         setLoading(false);
         console.error('Location error:', err.message);
       },
-      {enableHighAccuracy:Platform.OS==='ios' ? true : false, timeout: 30000, maximumAge: 5000},
+      {
+        enableHighAccuracy: Platform.OS === 'ios' ? true : false,
+        timeout: 30000,
+        maximumAge: 5000,
+      },
     );
   }, [dispatch, requestLocationPermission]);
 
